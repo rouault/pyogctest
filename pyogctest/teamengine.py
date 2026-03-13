@@ -25,10 +25,11 @@ class Teamengine(object):
         def __str__(self):
             return self.value
 
-    def __init__(self, suite, port, network):
+    def __init__(self, suite, port, network, ogcapi_root):
         self.suite = suite
         self.port = port
         self.network = network
+        self.ogcapi_root = ogcapi_root
 
         if self.suite == Teamengine.TestSuite.WMS130:
             self.image = OGCCITE_WMS130
@@ -88,7 +89,7 @@ class Teamengine(object):
                 "capabilities-url={1}".format(teamengine, getcapa)
             )
         elif self.suite == Teamengine.TestSuite.OGCAPIF:
-            entrypoint = "{}/wfs3".format(url)
+            entrypoint = "{0}{1}".format(url, self.ogcapi_root)
             teamengine = "http://localhost:{}/teamengine/rest/suites/ogcapi-features-1.0/run".format(
                 self.port
             )

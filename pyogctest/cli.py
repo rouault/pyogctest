@@ -120,6 +120,13 @@ def run():
         type=str,
         default="master",
     )
+
+    parser.add_argument(
+        "--ogcapi-root",
+        help="OGC API root (default: '/wfs3')",
+        type=str,
+        default="/wfs3",
+    )
     args = parser.parse_args()
 
     # init logging
@@ -156,7 +163,7 @@ def run():
 
     # run OGC tests with Teamengine
     start = datetime.datetime.now()
-    t = Teamengine(args.suite, args.port, args.network)
+    t = Teamengine(args.suite, args.port, args.network, args.ogcapi_root)
 
     Logger.debug("Pull docker image")
     t.pull()
